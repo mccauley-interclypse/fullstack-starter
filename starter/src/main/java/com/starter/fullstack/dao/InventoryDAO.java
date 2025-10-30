@@ -61,8 +61,11 @@ public class InventoryDAO {
    * @return Found Inventory.
    */
   public Optional<Inventory> retrieve(String id) {
-    // TODO
-    return Optional.empty();
+    Inventory inventory = this.mongoTemplate.findById(id, Inventory.class, "inventory");
+    if (inventory == null) {
+      return Optional.empty();
+    }
+    return Optional.of(inventory);
   }
 
   /**
@@ -82,7 +85,10 @@ public class InventoryDAO {
    * @return Deleted Inventory.
    */
   public Optional<Inventory> delete(String id) {
-    // TODO
-    return Optional.empty();
+    Optional<Inventory> inventory = this.retrieve(id);
+    if (!inventory.isEmpty()) {
+      this.mongoTemplate.remove(inventory.get());
+    }
+    return inventory;
   }
 }
