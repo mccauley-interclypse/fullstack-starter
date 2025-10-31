@@ -33,7 +33,7 @@ public class InventoryController {
    * @return List of Product.
    */
   @GetMapping
-  public List<Inventory> findInventories1() {
+  public List<Inventory> findInventories() {
     return this.inventoryDAO.findAll();
   }
 

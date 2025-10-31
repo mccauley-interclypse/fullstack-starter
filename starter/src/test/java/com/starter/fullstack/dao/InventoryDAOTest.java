@@ -2,6 +2,7 @@ package com.starter.fullstack.dao;
 
 import com.starter.fullstack.api.Inventory;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.Resource;
 import org.junit.After;
 import org.junit.Assert;
@@ -64,6 +65,36 @@ public class InventoryDAOTest {
     inventory.setId(null);
     Inventory inventoryTest = this.inventoryDAO.create(inventory);
     Assert.assertEquals(inventory, inventoryTest);
+  }
+
+  /**
+   *  Test delete method
+   */
+  @Test
+  public void deleteAndRemove() {
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    inventory.setId(null);
+    Inventory inventoryTest = this.inventoryDAO.create(inventory);
+    Assert.assertEquals(inventory, inventoryTest);
+
+    Optional<Inventory> deletedInventory = this.inventoryDAO.delete(inventoryTest.getId());
+    Assert.assertEquals(inventoryTest, deletedInventory.get());
+  }
+
+  /**
+   *  Test delete method
+   */
+  @Test
+  public void deleteEmpty() {
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    inventory.setId("");
+
+    Optional<Inventory> deletedInventory = this.inventoryDAO.delete(inventory.getId());
+    Assert.assertEquals(Optional.empty(), deletedInventory);
   }
 
 }
