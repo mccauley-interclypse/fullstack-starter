@@ -97,4 +97,35 @@ public class InventoryDAOTest {
     Assert.assertEquals(Optional.empty(), deletedInventory);
   }
 
+  /**
+   *  Test retreive method
+   */
+  @Test
+  public void getTest() {
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    inventory.setId(null);
+    Inventory inventoryTest = this.inventoryDAO.create(inventory);
+    Assert.assertEquals(inventory, inventoryTest);
+
+    Optional<Inventory> getInventory = this.inventoryDAO.retrieve(inventory.getId());
+    Assert.assertEquals(Optional.of(inventoryTest), getInventory);
+  }
+
+  /**
+   *  Test retreive method
+   */
+  @Test
+  public void getAndFailTest() {
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    inventory.setId(null);
+    Inventory inventoryTest = this.inventoryDAO.create(inventory);
+    Assert.assertEquals(inventory, inventoryTest);
+
+    Optional<Inventory> getInventory = this.inventoryDAO.retrieve(inventory.getId() + "1");
+    Assert.assertEquals(Optional.empty(), getInventory);
+  }
 }

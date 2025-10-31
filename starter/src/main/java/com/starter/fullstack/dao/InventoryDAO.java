@@ -86,7 +86,7 @@ public class InventoryDAO {
    */
   public Optional<Inventory> delete(String id) {
     Optional<Inventory> inventory = this.retrieve(id);
-    if (!inventory.isEmpty()) {
+    if (inventory.isPresent()) {
       this.mongoTemplate.remove(inventory.get());
     }
     return inventory;

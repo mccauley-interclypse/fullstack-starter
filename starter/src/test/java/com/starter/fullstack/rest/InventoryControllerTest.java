@@ -79,5 +79,19 @@ public class InventoryControllerTest {
     Assert.assertEquals(2, this.mongoTemplate.findAll(Inventory.class).size());
   }
 
+  /**
+   * Test delete endpoint.
+   * @throws Throwable see MockMvc
+   */
+  @Test
+  public void deleteTest() throws Throwable {
+    this.mockMvc.perform(delete("/inventory")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(this.inventory.getId()))
+            .andExpect(status().isOk());
+
+    Assert.assertEquals(0, this.mongoTemplate.findAll(Inventory.class).size());
+  }
 }
 
