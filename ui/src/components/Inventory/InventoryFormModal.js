@@ -4,6 +4,8 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Grid from '@material-ui/core/Grid'
+import MenuItem from '@material-ui/core/MenuItem'
+import moment from 'moment'
 import React from 'react'
 import TextField from '../Form/TextField'
 import { Field, Form, Formik } from 'formik'
@@ -29,6 +31,7 @@ class InventoryFormModal extends React.Component {
         <Formik
           initialValues={initialValues}
           onSubmit={values => {
+            values['bestBeforeDate'] = moment(values.bestBeforeDate)
             handleInventory(values)
             handleDialog(true)
           }}>
@@ -53,11 +56,18 @@ class InventoryFormModal extends React.Component {
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <Field
+                      select
                       custom={{ variant: 'outlined', fullWidth: true, }}
                       name='productType'
                       label='Product Type'
                       component={TextField}
-                    />
+                    >
+                      {products.map((product) =>
+                        <MenuItem value={product.name}>
+                          {product.name}
+                        </MenuItem>
+                      )}
+                    </Field>
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <Field
@@ -87,11 +97,19 @@ class InventoryFormModal extends React.Component {
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <Field
-                      custom={{ variant: 'outlined', fullWidth: true, }}
-                      name='unitOfMeasurement'
-                      label='Unit of Measurement'
                       component={TextField}
-                    />
+                      select
+                      fullWidth
+                      variant='outlined'
+                      name='unitOfMeasurement'
+                      label='Measurement Unit'
+                    >
+                      {Object.entries(measurements).map(([key, measurement]) =>
+                        <MenuItem value={key}>
+                          {measurement.name}
+                        </MenuItem>
+                      )}
+                    </Field>
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <Field

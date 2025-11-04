@@ -187,7 +187,7 @@ const InventoryLayout = (props) => {
               averagePrice: 0,
               amount: 0,
               productType: '',
-              bestBeforeDate: '',
+              bestBeforeDate: moment().format('MM/DD/YYYY'),
               neverExpires: false,
               unitOfMeasurement: '',
               name: ''
