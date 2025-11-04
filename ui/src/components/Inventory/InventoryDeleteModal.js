@@ -8,7 +8,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { Form, Formik } from 'formik'
 
-class ProductDeleteModal extends React.Component {
+class InventoryDeleteModal extends React.Component {
   render() {
     const {
       handleDialog,
@@ -28,20 +28,20 @@ class ProductDeleteModal extends React.Component {
             handleDialog(true)
           }}>
           {helpers =>
-            <Form autoComplete='off' id={'deleteProduct'}>
-              <DialogTitle id='alert-dialog-title'>Delete Product</DialogTitle>
+            <Form autoComplete='off' id={'deleteInventory'}>
+              <DialogTitle id='alert-dialog-title'>Delete Inventory</DialogTitle>
               <DialogContent>
                 <Grid container>
                   <Grid item xs={12}>
                     <Typography>
-                      Are you sure you want to delete this product?
+                      Are you sure you want to delete this Inventory?
                     </Typography>
                   </Grid>
                 </Grid>
               </DialogContent>
               <DialogActions>
                 <Button onClick={() => { handleDialog(false) }} color='secondary'>No</Button>
-                <Button disableElevation variant='contained' type='submit' form='deleteProduct' color='secondary'>
+                <Button disableElevation variant='contained' type='submit' form='deleteInventory' color='secondary'>
                   Yes
                 </Button>
               </DialogActions>
@@ -53,8 +53,8 @@ class ProductDeleteModal extends React.Component {
   }
 }
 
-ProductDeleteModal.defaultProps = {
+InventoryDeleteModal.defaultProps = {
   delete: {}
 }
 
-export default ProductDeleteModal
+export default InventoryDeleteModal
