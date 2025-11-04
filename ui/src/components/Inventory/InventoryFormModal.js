@@ -15,7 +15,9 @@ class InventoryFormModal extends React.Component {
       handleDialog,
       handleInventory,
       title,
-      initialValues
+      initialValues,
+      products,
+      measurements,
     } = this.props
     return (
       <Dialog
@@ -48,6 +50,63 @@ class InventoryFormModal extends React.Component {
                       label='Name'
                       component={TextField}
                     />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Field
+                      custom={{ variant: 'outlined', fullWidth: true, }}
+                      name='productType'
+                      label='Product Type'
+                      component={TextField}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Field
+                      custom={{ variant: 'outlined', fullWidth: true, }}
+                      name='description'
+                      label='Description'
+                      component={TextField}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Field
+                      custom={{ variant: 'outlined', fullWidth: true, }}
+                      name='averagePrice'
+                      label='Average Price'
+                      component={TextField}
+                      type='number'
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Field
+                      custom={{ variant: 'outlined', fullWidth: true, }}
+                      name='amount'
+                      label='Amount'
+                      component={TextField}
+                      type='number'
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Field
+                      custom={{ variant: 'outlined', fullWidth: true, }}
+                      name='unitOfMeasurement'
+                      label='Unit of Measurement'
+                      component={TextField}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Field
+                      custom={{ variant: 'outlined', fullWidth: true, }}
+                      name='bestBeforeDate'
+                      component={TextField}
+                      type='date'
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Field
+                      name='neverExpires'
+                      type='checkbox'
+                    />
+                    Never Expires?
                   </Grid>
                 </Grid>
               </DialogContent>

@@ -50,12 +50,14 @@ const InventoryLayout = (props) => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const inventory = useSelector(state => state.inventory.all)
+  const products = useSelector(state => state.products.all)
   const isFetched = useSelector(state => state.inventory.fetched && state.products.fetched)
-  const saveInventory = useCallback(product => { dispatch(inventoryDuck.saveInventory(inventory)) }, [dispatch])
+  const saveInventory = useCallback(inventory => { dispatch(inventoryDuck.saveInventory(inventory)) }, [dispatch])
 
   useEffect(() => {
     if (!isFetched) {
       dispatch(inventoryDuck.findInventory())
+      dispatch(productDuck.findProducts())
     }
   }, [dispatch, isFetched])
 
@@ -178,8 +180,20 @@ const InventoryLayout = (props) => {
           formName='inventoryCreate'
           isDialogOpen={isCreateOpen}
           handleDialog={toggleModals}
-          handleProduct={saveInventory}
-          initialValues={checked[0]}
+          handleInventory={saveInventory}
+          initialValues=
+            {{
+              description: '',
+              averagePrice: 0,
+              amount: 0,
+              productType: '',
+              bestBeforeDate: '',
+              neverExpires: false,
+              unitOfMeasurement: '',
+              name: ''
+            }}
+          products={products}
+          measurements={MeasurementUnits}
         />
       </Grid>
     </Grid>
