@@ -79,23 +79,11 @@ const InventoryLayout = (props) => {
     setCreateOpen(false)
     setDeleteOpen(false)
     if (resetChecked) {
-      setChecked([])
+      setSelected([])
     }
+    console.log('tmodal2'+selected)
   }
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value)
-    const newChecked = [...checked]
-
-    if (currentIndex === -1) {
-      newChecked.push(value)
-    } else {
-      newChecked.splice(currentIndex, 1)
-    }
-    setChecked(newChecked)
-  }
-
-  const [checked, setChecked] = React.useState([])
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
@@ -207,7 +195,7 @@ const InventoryLayout = (props) => {
           isDialogOpen={isDeleteOpen}
           handleDialog={toggleModals}
           handleDelete={deleteInventory}
-          initialValues={checked.map(check => check.id)}
+          initialValues={selected}
         />
       </Grid>
     </Grid>
