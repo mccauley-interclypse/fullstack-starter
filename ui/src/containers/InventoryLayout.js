@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const normalizeInventory = (inventory) => inventory.map(inv => ({
   ...inv,
-  unitOfMeasurement: MeasurementUnits[inv.unitOfMeasurement].name,
+  unitOfMeasurement: MeasurementUnits[inv.unitOfMeasurement]?.name ?? 'N/A',
   bestBeforeDate: moment(inv.bestBeforeDate).format('MM/DD/YYYY')
 }))
 
@@ -54,6 +54,10 @@ const InventoryLayout = (props) => {
   const products = useSelector(state => state.products.all)
   const isFetched = useSelector(state => state.inventory.fetched && state.products.fetched)
   const saveInventory = useCallback(inventory => { dispatch(inventoryDuck.saveInventory(inventory)) }, [dispatch])
+  const editInventory = useCallback((inventory) => {
+    dispatch(inventoryDuck.updateInventory(inventory))
+    console.log(inventory)
+  }, [dispatch])
   const deleteInventory = useCallback(ids => { dispatch(inventoryDuck.removeInventory(ids)) }, [dispatch])
 
   useEffect(() => {
@@ -68,15 +72,25 @@ const InventoryLayout = (props) => {
   const [orderBy, setOrderBy] = React.useState('calories')
   const [selected, setSelected] = React.useState([])
   const [isCreateOpen, setCreateOpen] = React.useState(false)
+  const [isEditOpen, setEditOpen] = React.useState(false)
   const [isDeleteOpen, setDeleteOpen] = React.useState(false)
   const toggleCreate = () => {
+    console.log('Toggle Create Modal')
     setCreateOpen(true)
   }
   const toggleDelete = () => {
+    console.log('Toggle Delete Modal')
     setDeleteOpen(true)
   }
+  const toggleEdit = () => {
+    console.log('Toggle Edit Modal')
+    console.log(selected)
+    setEditOpen(true)
+  }
   const toggleModals = (resetChecked) => {
+    console.log('Toggle all Modal')
     setCreateOpen(false)
+    setEditOpen(false)
     setDeleteOpen(false)
     if (resetChecked) {
       setSelected([])
@@ -84,12 +98,14 @@ const InventoryLayout = (props) => {
   }
 
   const handleRequestSort = (event, property) => {
+    console.log('Toggle sort Modal')
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
     setOrderBy(property)
   }
 
   const handleSelectAllClick = (event) => {
+    console.log('Toggle sssall Modal')
     if (event.target.checked) {
       const newSelected = normalizedInventory.map((row) => row.id)
       setSelected(newSelected)
@@ -99,6 +115,7 @@ const InventoryLayout = (props) => {
   }
 
   const handleClick = (event, id) => {
+    console.log('Toggle sss Modal')
     const selectedIndex = selected.indexOf(id)
     let newSelected = []
     if (selectedIndex === -1) {
@@ -125,6 +142,7 @@ const InventoryLayout = (props) => {
           numSelected={selected.length}
           title='Inventory'
           toggleCreate={toggleCreate}
+          toggleEdit={toggleEdit}
           toggleDelete={toggleDelete}
         />
         <TableContainer component={Paper}>
@@ -186,6 +204,27 @@ const InventoryLayout = (props) => {
               neverExpires: false,
               unitOfMeasurement: '',
               name: ''
+            }}
+          products={products}
+          measurements={MeasurementUnits}
+        />
+        <InventoryFormModal
+          title='Update'
+          formName='inventoryUpdate'
+          isDialogOpen={isEditOpen}
+          handleDialog={toggleModals}
+          handleInventory={editInventory}
+          initialValues=
+            {{
+              id: selected?.[0],
+              description: inventory.find(inv => inv.id === selected?.[0])?.description ?? '',
+              averagePrice: inventory.find(inv => inv.id === selected?.[0])?.averagePrice ?? 0,
+              amount: inventory.find(inv => inv.id === selected?.[0])?.amount ?? 0,
+              productType: inventory.find(inv => inv.id === selected?.[0])?.productType ?? '',
+              bestBeforeDate: moment(inventory.find(inv => inv.id === selected?.[0])?.bestBeforeDate).format('YYYY-MM-DD') ?? moment().format('YYYY-MM-DD'),
+              neverExpires: inventory.find(inv => inv.id === selected?.[0])?.neverExpires ?? false,
+              unitOfMeasurement: inventory.find(inv => inv.id === selected?.[0])?.unitOfMeasurement ?? '',
+              name: inventory.find(inv => inv.id === selected?.[0])?.name ?? ''
             }}
           products={products}
           measurements={MeasurementUnits}

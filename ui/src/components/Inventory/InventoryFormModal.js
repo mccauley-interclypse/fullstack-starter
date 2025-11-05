@@ -19,6 +19,7 @@ function InventoryFormModal(props) {
     products,
     measurements,
   } = props
+  console.log(initialValues)
   return (
     <Dialog
       open={props.isDialogOpen}
@@ -30,6 +31,8 @@ function InventoryFormModal(props) {
         initialValues={initialValues}
         onSubmit={values => {
           values['bestBeforeDate'] = moment(values.bestBeforeDate)
+          console.log('submit')
+          console.log(values)
           handleInventory(values)
           handleDialog(true)
         }}>
