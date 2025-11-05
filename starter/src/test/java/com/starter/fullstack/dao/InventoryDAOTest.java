@@ -30,6 +30,8 @@ public class InventoryDAOTest {
   private InventoryDAO inventoryDAO;
   private static final String NAME = "Amber";
   private static final String PRODUCT_TYPE = "hops";
+  private static final String NAME2 = "Cluster";
+  private static final String PRODUCT_TYPE2 = "malt";
 
   @Before
   public void setup() {
@@ -127,5 +129,38 @@ public class InventoryDAOTest {
 
     Optional<Inventory> getInventory = this.inventoryDAO.retrieve(inventory.getId() + "1");
     Assert.assertEquals(Optional.empty(), getInventory);
+  }
+
+  /**
+   *  Test update method
+   */
+  @Test
+  public void getAndUpdateTest() {
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    inventory.setId(null);
+    Inventory inventoryTest = this.inventoryDAO.create(inventory);
+    Assert.assertEquals(inventory, inventoryTest);
+
+    Inventory inventory2 = new Inventory();
+    inventory2.setName(NAME2);
+    inventory2.setProductType(PRODUCT_TYPE2);
+
+    Optional<Inventory> updatedInventory = this.inventoryDAO.update(inventoryTest.getId(), inventory2);
+    inventory2.setId(inventoryTest.getId());
+    Assert.assertEquals(Optional.of(inventory2), updatedInventory);
+  }
+
+  /**
+   *  Test update method
+   */
+  @Test
+  public void getAndUpdateNotFoundTest() {
+    Inventory inventory2 = new Inventory();
+    inventory2.setName(NAME2);
+    inventory2.setProductType(PRODUCT_TYPE2);
+    Optional<Inventory> updatedInventory = this.inventoryDAO.update("1", inventory2);
+    Assert.assertEquals(Optional.empty(), updatedInventory);
   }
 }

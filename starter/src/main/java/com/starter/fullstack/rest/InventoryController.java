@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Inventory Controller.
@@ -46,6 +42,20 @@ public class InventoryController {
   @PostMapping
   public Inventory create(@Valid @RequestBody Inventory inventory) {
     return this.inventoryDAO.create(inventory);
+  }
+
+  /**
+   * Save inventory.
+   * @param inventory inventory.
+   * @return inventory.
+   */
+  @PutMapping("/{id}")
+  public Inventory update(@PathVariable String id, @Valid @RequestBody Inventory inventory) {
+    Optional<Inventory> optionalInventory = this.inventoryDAO.update(id, inventory);
+    if (optionalInventory.isEmpty()) {
+      return null;
+    }
+    return optionalInventory.get();
   }
 
   @DeleteMapping
