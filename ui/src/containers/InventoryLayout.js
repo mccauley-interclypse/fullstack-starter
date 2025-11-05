@@ -81,7 +81,6 @@ const InventoryLayout = (props) => {
     if (resetChecked) {
       setSelected([])
     }
-    console.log('tmodal2'+selected)
   }
 
   const handleRequestSort = (event, property) => {
