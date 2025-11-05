@@ -47,6 +47,7 @@ public class InventoryController {
   /**
    * Save inventory.
    * @param inventory inventory.
+   * @param id id of inventory ot update
    * @return inventory.
    */
   @PutMapping("/{id}")
