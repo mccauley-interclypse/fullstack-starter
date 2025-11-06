@@ -98,5 +98,24 @@ public class InventoryControllerTest {
 
     Assert.assertEquals(0, this.mongoTemplate.findAll(Inventory.class).size());
   }
+
+
+  /**
+   * Test create endpoint.
+   * @throws Throwable see MockMvc
+   */
+  @Test
+  public void update() throws Throwable {
+    this.inventory = new Inventory();
+    this.inventory.setName(NAME2);
+    this.inventory.setProductType(PRODUCT_TYPE);
+    this.mockMvc.perform(put("/inventory/{id}", ID1)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(this.objectMapper.writeValueAsString(this.inventory)))
+            .andExpect(status().isOk());
+
+    Assert.assertEquals(1, this.mongoTemplate.findAll(Inventory.class).size());
+  }
+
 }
 

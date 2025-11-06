@@ -48,7 +48,7 @@ export const saveInventory = createAction(actions.INVENTORY_SAVE, (inventory) =>
 
 export const updateInventory = createAction(actions.INVENTORY_UPDATE, (inventory) =>
   (dispatch, getState, config) => axios
-    .post(`${config.restAPIUrl}/inventory`, inventory)
+    .put(`${config.restAPIUrl}/inventory/${inventory.id}`, inventory)
     .then((suc) => {
       const invs = []
       getState().inventory.all.forEach(inv => {
