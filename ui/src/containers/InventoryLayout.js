@@ -56,7 +56,6 @@ const InventoryLayout = (props) => {
   const saveInventory = useCallback(inventory => { dispatch(inventoryDuck.saveInventory(inventory)) }, [dispatch])
   const editInventory = useCallback((inventory) => {
     dispatch(inventoryDuck.updateInventory(inventory))
-    console.log(inventory)
   }, [dispatch])
   const deleteInventory = useCallback(ids => { dispatch(inventoryDuck.removeInventory(ids)) }, [dispatch])
 
@@ -75,20 +74,15 @@ const InventoryLayout = (props) => {
   const [isEditOpen, setEditOpen] = React.useState(false)
   const [isDeleteOpen, setDeleteOpen] = React.useState(false)
   const toggleCreate = () => {
-    console.log('Toggle Create Modal')
     setCreateOpen(true)
   }
   const toggleDelete = () => {
-    console.log('Toggle Delete Modal')
     setDeleteOpen(true)
   }
   const toggleEdit = () => {
-    console.log('Toggle Edit Modal')
-    console.log(selected)
     setEditOpen(true)
   }
   const toggleModals = (resetChecked) => {
-    console.log('Toggle all Modal')
     setCreateOpen(false)
     setEditOpen(false)
     setDeleteOpen(false)
@@ -98,14 +92,12 @@ const InventoryLayout = (props) => {
   }
 
   const handleRequestSort = (event, property) => {
-    console.log('Toggle sort Modal')
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
     setOrderBy(property)
   }
 
   const handleSelectAllClick = (event) => {
-    console.log('Toggle sssall Modal')
     if (event.target.checked) {
       const newSelected = normalizedInventory.map((row) => row.id)
       setSelected(newSelected)
@@ -115,7 +107,6 @@ const InventoryLayout = (props) => {
   }
 
   const handleClick = (event, id) => {
-    console.log('Toggle sss Modal')
     const selectedIndex = selected.indexOf(id)
     let newSelected = []
     if (selectedIndex === -1) {
